@@ -1,18 +1,20 @@
-import Head from "next/head";
+'use client';
+import React,{useState} from "react";
 import SectionFirstLook from "@/components/home/section-first-look/page";
-  
+import Liscategories from './categories/cards/page';
+// npm i @mui/base
+import ClickAwayListener from '@mui/base/ClickAwayListener';
+
 export default function Home() {
+
+  const [multiSelectExpanded, setMultiSelectExpanded] = useState(true);
+
+  const handleClickAway = () => {
+    setMultiSelectExpanded(true)
+  }
+
   return (
-    <html>
- <Head>
-        <title>l'Escale Beauté | Chaises à Besançon</title>
-        <meta
-          name="description"
-          content="l'Escale Beauté & Extérieur"
-        />
-        {/* <link rel="canonical" href={canonicalUrl} /> */}
-</Head>
-<body> 
+
    
   <div className="interface-home">
   <div className="banner-item-01">
@@ -46,18 +48,21 @@ En effectuant vos commandes de meubles chez nous, vous opterez pour le meilleur 
 Maintenant, vous pouvez commander et régler en toute sérénité, grâce à notre système de paiement en ligne, tout en bénéficiant de la possibilité de payer un Accompte pour vos commandes en ligne!
 </div>
     </div>
+    <ClickAwayListener onClickAway={handleClickAway}>
     <div className="banner-item-02">
-    <SectionFirstLook
    
+    <SectionFirstLook
     descriptionPrimary={`NOTRE PRIORITÉ ABSOLUE EST DE VOUS PROPOSER DES PRODUITS D’EXCEPTION`}
-    
     linkButton={true} //we will put the redirection link in this attribute
-    withArrowJump={"info"}
-  />
+    multiSelectExpanded={multiSelectExpanded}
+    setMultiSelectExpanded={setMultiSelectExpanded}
+    />
+  
   </div>
+  </ClickAwayListener>
+  { multiSelectExpanded ? <Liscategories/> :null}
+  </div>
+ 
 
-  </div>
-  </body> 
-  </html>
   )
 }

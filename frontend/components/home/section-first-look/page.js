@@ -1,20 +1,18 @@
 "use client"
 
-import React, { useState } from "react";
-import Liscategories from '../../../app/categories/cards/page'
+import React from "react";
 
 const SectionFirstLook = ({
   descriptionPrimary,
- 
   linkButton,
-  withArrowJump,
+  setMultiSelectExpanded,
+  multiSelectExpanded
 }) => {
   
-const[aff,setAff]=useState(true)
+ 
 
   return (
-<>
-<div>
+
      <section className="first-look">
       <div className="first-look-container">
         
@@ -22,35 +20,36 @@ const[aff,setAff]=useState(true)
           <div className="description-primary">
             <h1>{descriptionPrimary}</h1>
           </div>
-          
-
-          {linkButton ? (
-            <div className="btn-espa" href="#services">
+           {linkButton ? (
+            <div className="btn-espa" onClick={() => setMultiSelectExpanded(!multiSelectExpanded)}>
                          
                   Découvrir
-              
-              
+          
          
             </div>
           ) : null}
         </div>
-        {withArrowJump ? (
-          <div className="arrow-jump" >
+        
+      <div 
+        
+        onClick={() => setMultiSelectExpanded(!multiSelectExpanded)}
+       
+      >
+       
+        <img
          
-              <img src="https://i.ibb.co/kgSTKJn/arrow-down.png" onClick={()=>setAff(!aff)}/>
-          
-          </div>
-        ) : null}
-      
+          src="https://i.ibb.co/kgSTKJn/arrow-down.png"
+          style={{
+            transform: multiSelectExpanded ? `rotate(180deg)` : `rotate(0deg)`,
+            transitionDuration: `150ms`,
+          }}
+        />
+      </div>
+
       </div>
       
     </section>
-    </div>
-<div>
-{aff ? <Liscategories/> :null } 
-</div>
-    
-</>
+
   );
 };
 
