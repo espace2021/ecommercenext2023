@@ -1,0 +1,86 @@
+.interface-home {
+  background-color: #fff5ee;
+
+}
+
+.banner-item-01 {
+	padding: 300px 0px;
+	background-image: url("https://www.comme-chez-vous.fr/wp-content/uploads/2019/08/am%C3%A9nager-exterieur-900x601.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.banner-item-02 {
+	padding: 300px 0px;
+	background-image: url("https://firebasestorage.googleapis.com/v0/b/nextproject-76ce9.appspot.com/o/files%2Fmobilier-exterieur-11.jpg?alt=media&token=b7837d8c-505f-4a07-bdec-a01bc8eadc60");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+  
+}
+
+.text-content{
+  color:#fff5ee
+}
+.paragraphe-first{
+
+  margin: 0 auto;
+  background-color: #f9e1e124;
+  padding: 0 20px 20px 20px;
+ 
+}
+.description-primary{
+  color:#f7f1f5b9
+}
+
+.section-carousel-cards {
+  height: 70vh;
+  @media screen and (max-height: 600px) {
+    height: 100vh;
+  }
+
+  .react-multi-carousel-list {
+    height: 100%;
+    @media screen and (max-width: 700px) {
+      justify-content: flex-start;
+    }
+    .react-multi-carousel-track li {
+      margin: 0 auto;
+      
+        position: relative;
+
+        display: flex;
+        max-width: 405px;
+
+        justify-content: center;
+
+        @media screen and (min-width: 1000px) {
+          min-width: 405px;
+        }
+        @media screen and (max-width: 1200px) {
+          max-width: 100vw;
+        }
+        
+      
+    }
+    .react-multiple-carousel__arrow,
+    .react-multiple-carousel__arrow--left,
+    .react-multiple-carousel__arrow--right {
+      display: none;
+   
+    }
+    .react-multi-carousel-dot button {
+      
+        border-color: #c2a284;
+        border-width: 1px;
+      
+    }
+    .react-multi-carousel-dot--active button {
+      
+        background-color: #c2a284;
+      
+    }
+  }
+  
+}
