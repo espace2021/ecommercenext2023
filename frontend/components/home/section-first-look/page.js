@@ -1,7 +1,7 @@
 "use client"
 
-import React from "react";
-
+import React, { useState } from "react";
+import Liscategories from '../../../app/categories/cards/page'
 
 const SectionFirstLook = ({
   descriptionPrimary,
@@ -10,8 +10,12 @@ const SectionFirstLook = ({
   withArrowJump,
 }) => {
   
+const[aff,setAff]=useState(true)
+
   return (
-    <section className="first-look">
+<>
+<div>
+     <section className="first-look">
       <div className="first-look-container">
         
        <div className="title-descrptions-container">
@@ -22,23 +26,31 @@ const SectionFirstLook = ({
 
           {linkButton ? (
             <div className="btn-espa" href="#services">
-              <a href="#services">
-                <button className="transparent hover-bg uppercase">
-                  réserver
-                </button>
-              </a>
+                         
+                  Découvrir
+              
+              
+         
             </div>
           ) : null}
         </div>
         {withArrowJump ? (
-          <div className="arrow-jump">
-            <a href={`#${withArrowJump}`}>
-              <img src="https://i.ibb.co/kgSTKJn/arrow-down.png" />
-            </a>
+          <div className="arrow-jump" >
+         
+              <img src="https://i.ibb.co/kgSTKJn/arrow-down.png" onClick={()=>setAff(!aff)}/>
+          
           </div>
         ) : null}
+      
       </div>
+      
     </section>
+    </div>
+<div>
+{aff ? <Liscategories/> :null } 
+</div>
+    
+</>
   );
 };
 

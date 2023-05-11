@@ -36,8 +36,8 @@ const CarouselCards = ({ cat }) => {
         slidesToSlide={2}
         responsive={responsive}
       >
-        {cat.map(card => {
-          return <CardWithImage {...card} />;
+        {cat.map((card,index) => {
+          return <CardWithImage {...card} key={index} />;
         })}
       </Carousel>
   );

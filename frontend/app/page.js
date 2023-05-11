@@ -1,8 +1,5 @@
 import Head from "next/head";
 import SectionFirstLook from "@/components/home/section-first-look/page";
-import Liscategories from "./categories/cards/page";
-
-
   
 export default function Home() {
   return (
@@ -58,7 +55,7 @@ Maintenant, vous pouvez commander et régler en toute sérénité, grâce à not
     withArrowJump={"info"}
   />
   </div>
- <Liscategories/>
+
   </div>
   </body> 
   </html>
