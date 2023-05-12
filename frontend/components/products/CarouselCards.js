@@ -1,6 +1,5 @@
 "use client"
 import React from "react";
-import dynamic from "next/dynamic";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CardWithImage from "./card-with-image";
@@ -26,6 +25,7 @@ const responsive = {
 
 const CarouselCards = ({ products }) => {
   return (
+    <>
 <Carousel
         autoPlay
         autoPlaySpeed={1}
@@ -36,10 +36,12 @@ const CarouselCards = ({ products }) => {
         slidesToSlide={2}
         responsive={responsive}
       >
-        {products.map(card => {
+        {products.map((card) => {
           return <CardWithImage {...card} />;
         })}
       </Carousel>
+
+    </>
   );
 };
 

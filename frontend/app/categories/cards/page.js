@@ -1,18 +1,18 @@
 import CarouselCards from '@/components/categories/CarouselCards'
 import React from 'react'
 
-async function getCategories(){
+const getCategories=async ()=>{
  
     const res= await fetch('http://localhost:3001/api/categories',{cache : "no-store"})
     const categories = await res.json();
     return categories;
 }
 
-const Liscategories = async () => {
+const Liscategories = async ({show}) => {
   const categories = await getCategories();
   return (
     <div>
-        <CarouselCards cat={categories} />
+    {show ? <CarouselCards cat={categories} /> :null } 
     </div>
   )
 }

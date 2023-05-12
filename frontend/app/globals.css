@@ -4,7 +4,7 @@
 }
 
 .banner-item-01 {
-	padding: 300px 0px;
+	padding: 200px 0px;
 	background-image: url("https://www.comme-chez-vous.fr/wp-content/uploads/2019/08/am%C3%A9nager-exterieur-900x601.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -12,9 +12,9 @@
 }
 
 .banner-item-02 {
-	padding: 300px 0px;
+	padding: 100px 0px;
 	background-image: url("https://firebasestorage.googleapis.com/v0/b/nextproject-76ce9.appspot.com/o/files%2Fmobilier-exterieur-11.jpg?alt=media&token=b7837d8c-505f-4a07-bdec-a01bc8eadc60");
-	background-size: cover;
+	background-size: 100% 85%;
 	background-repeat: no-repeat;
 	background-position: center center;
   
@@ -31,7 +31,11 @@
  
 }
 .description-primary{
-  color:#f7f1f5b9
+  color:#3fc2e3b9
+}
+
+.description-secondary{
+  text-align: center
 }
 
 .section-carousel-cards {

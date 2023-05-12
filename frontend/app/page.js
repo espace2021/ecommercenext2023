@@ -1,21 +1,22 @@
 'use client';
 import React,{useState} from "react";
-import SectionFirstLook from "@/components/home/section-first-look/page";
-import Liscategories from './categories/cards/page';
-// npm i @mui/base
-import ClickAwayListener from '@mui/base/ClickAwayListener';
+import SectionFirstLook from "@/components/home/section-first-look/pageSectionFirst";
+import Liscategories from "./categories/cards/page";
+
 
 export default function Home() {
 
-  const [multiSelectExpanded, setMultiSelectExpanded] = useState(true);
+  const [show, setShow] = useState(false);
 
-  const handleClickAway = () => {
-    setMultiSelectExpanded(true)
+const handleShow=(value)=>{
+
+setShow(value)
+
   }
 
-  return (
 
-   
+ return (
+  
   <div className="interface-home">
   <div className="banner-item-01">
           <div className="text-content">
@@ -48,21 +49,21 @@ En effectuant vos commandes de meubles chez nous, vous opterez pour le meilleur 
 Maintenant, vous pouvez commander et régler en toute sérénité, grâce à notre système de paiement en ligne, tout en bénéficiant de la possibilité de payer un Accompte pour vos commandes en ligne!
 </div>
     </div>
-    <ClickAwayListener onClickAway={handleClickAway}>
     <div className="banner-item-02">
-   
-    <SectionFirstLook
-    descriptionPrimary={`NOTRE PRIORITÉ ABSOLUE EST DE VOUS PROPOSER DES PRODUITS D’EXCEPTION`}
-    linkButton={true} //we will put the redirection link in this attribute
-    multiSelectExpanded={multiSelectExpanded}
-    setMultiSelectExpanded={setMultiSelectExpanded}
-    />
-  
-  </div>
-  </ClickAwayListener>
-  { multiSelectExpanded ? <Liscategories/> :null}
-  </div>
  
+    <SectionFirstLook
+    descriptionPrimary={`NOTRE PRIORITÉ EST DE VOUS PROPOSER DES PRODUITS D’EXCEPTION`}
+    handleShow={handleShow}
+        />
+
+  </div>
+ {/* <Liscategories show={show} /> */} 
+{
+  !show? "*************************"
+  :null
+}
+
+  </div>
 
   )
 }

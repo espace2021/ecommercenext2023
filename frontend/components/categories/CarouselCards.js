@@ -22,11 +22,10 @@ const responsive = {
   }
 };
 
-
-
-const CarouselCards = ({ cat }) => {
+const CarouselCards = ({ cat}) => { 
   return (
-<Carousel
+  
+     <Carousel
         autoPlay
         autoPlaySpeed={1}
         infinite={true}
@@ -40,6 +39,7 @@ const CarouselCards = ({ cat }) => {
           return <CardWithImage {...card} key={index} />;
         })}
       </Carousel>
+      
   );
 };
 
