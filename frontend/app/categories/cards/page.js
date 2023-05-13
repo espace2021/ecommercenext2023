@@ -1,18 +1,23 @@
+"use client";
 import CarouselCards from '@/components/categories/CarouselCards'
-import React from 'react'
+import React,{useState} from 'react'
 
-const getCategories=async ()=>{
+
+const Liscategories =  () => {
+
+ const [categories,setCategories]=useState()
  
-    const res= await fetch('http://localhost:3001/api/categories',{cache : "no-store"})
-    const categories = await res.json();
-    return categories;
-}
+ fetch('http://localhost:3001/api/categories',{cache : "no-store"})
+  .then((response) => response.json())
+  .then((res) => { 
+    setCategories(res) 
+  });
 
-const Liscategories = async ({show}) => {
-  const categories = await getCategories();
+ 
   return (
     <div>
-    {show ? <CarouselCards cat={categories} /> :null } 
+<CarouselCards cat={categories} />
+  
     </div>
   )
 }

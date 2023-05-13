@@ -1,21 +1,11 @@
-'use client';
-import React,{useState} from "react";
+import React from "react";
 import SectionFirstLook from "@/components/home/section-first-look/pageSectionFirst";
-import Liscategories from "./categories/cards/page";
 
 
 export default function Home() {
 
-  const [show, setShow] = useState(false);
-
-const handleShow=(value)=>{
-
-setShow(value)
-
-  }
-
-
- return (
+ 
+return (
   
   <div className="interface-home">
   <div className="banner-item-01">
@@ -49,21 +39,14 @@ En effectuant vos commandes de meubles chez nous, vous opterez pour le meilleur 
 Maintenant, vous pouvez commander et régler en toute sérénité, grâce à notre système de paiement en ligne, tout en bénéficiant de la possibilité de payer un Accompte pour vos commandes en ligne!
 </div>
     </div>
+
     <div className="banner-item-02">
- 
     <SectionFirstLook
     descriptionPrimary={`NOTRE PRIORITÉ EST DE VOUS PROPOSER DES PRODUITS D’EXCEPTION`}
-    handleShow={handleShow}
         />
-
   </div>
- {/* <Liscategories show={show} /> */} 
-{
-  !show? "*************************"
-  :null
-}
-
-  </div>
+ 
+</div>
 
   )
 }

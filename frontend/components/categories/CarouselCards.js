@@ -23,22 +23,31 @@ const responsive = {
 };
 
 const CarouselCards = ({ cat}) => { 
+console.log(cat)
   return (
-  
-     <Carousel
-        autoPlay
-        autoPlaySpeed={1}
-        infinite={true}
-        customTransition="all 1s linear"
-        transitionDuration={7000}
-        containerClass="container-with-dots"
-        slidesToSlide={2}
-        responsive={responsive}
-      >
-        {cat.map((card,index) => {
-          return <CardWithImage {...card} key={index} />;
-        })}
-      </Carousel>
+<>
+{cat &&  <Carousel
+      autoPlay
+      autoPlaySpeed={1}
+      infinite={true}
+      customTransition="all 1s linear"
+      transitionDuration={7000}
+      containerClass="container-with-dots"
+      slidesToSlide={2}
+      responsive={responsive}
+    >
+ 
+      {
+      cat.map((card,index) => {
+        return <CardWithImage {...card} key={index} />;
+      })
+      }
+   
+
+  </Carousel> }
+</>
+   
+   
       
   );
 };
