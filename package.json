@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@mui/base": "^5.0.0-beta.0",
+    "axios": "^1.4.0",
+    "next-auth": "^4.22.1",
     "react-fade-in": "^2.0.1",
     "react-leaf-carousel": "^3.0.0"
   }

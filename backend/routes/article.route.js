@@ -4,7 +4,7 @@ const Article=require("../models/article")
 const {verifyToken} =require("../middleware/verif-token")
 const { uploadFile } = require('../middleware/upload-file')
 // afficher la liste des articles.
-router.get('/', async (req, res, )=> {
+router.get('/', verifyToken,async (req, res, )=> {
     try {
         const articles = await Article.find().populate("scategorieID").exec();
                 
