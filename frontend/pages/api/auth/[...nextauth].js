@@ -12,7 +12,7 @@ export default NextAuth({
             async authorize(credentials,req){
                       
                 const {email, password} = credentials;
-                console.log(email, password)
+               // console.log(email, password)
              
                 const res = await axios.post('http://127.0.0.1:3001/api/users/login',{
                   email, 
@@ -20,15 +20,17 @@ export default NextAuth({
                     })
              
                   if(res){  
-                 /* const user = {
+                 const user = {
                         "email": res.data.user.email,
                         "name": res.data.user.firstname+ " "+res.data.user.lastname,
+                        "password":password
+                     };
+                    
+                        /*
                         "accessToken": res.data.token,
                         "refreshToken": res.data.refreshToken
-                     };*/
-                    
-
-                    return res.data
+                        */
+                    return user
                     }
                     else {
                         console.log("ERROR ");
@@ -42,28 +44,34 @@ export default NextAuth({
             })
         
     ],
+    callbacks: {
+        jwt: async ({ token, user }) => {
+            console.log("user ",user)
+        if (user) {
+           
+            const email = user.email;
+                const password = user.password
+        
+            const updatedUser =  await axios.post('http://127.0.0.1:3001/api/users/login',{
+                email, 
+                password
+                  })
+            token.user = updatedUser.data;
+        }
+
+          return Promise.resolve(token);
+        },
+        session: async ({ session, token }) => {
+          session.user = token.user;
+          console.log("Session ",session)
+          return Promise.resolve(session);
+        },
+      },
     pages : {
         signIn: '/login'
     },
-    secret : process.env.NEXTAUTH_SECRET,
-    jwt: async ({ token, user }) => {
-        if (user) {
-           
-            token.accessToken = user.data.token;
-       
-            token.refreshToken = user.data.refreshToken;
-        }
-
-       console.log(token)
-        return Promise.resolve(token);
-    }, 
-    session: async ({ session, token }) => {
-    
-        session.accessToken = token.accessToken;
-        session.refreshToken=  token.refreshToken;
-      
-        return Promise.resolve(session);
-    },
+    secret : process.env.NEXTAUTH_SECRET
+   
 });
 
 

@@ -11,7 +11,7 @@ async function getProducts(){
 
 const Listproduct =  async() => {
   const products =  await getProducts();
-  
+  console.log(products)
   return (
     <div>
      { products?.map((product,index) =>{
