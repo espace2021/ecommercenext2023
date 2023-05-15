@@ -1,5 +1,5 @@
 import React from 'react'
-import Axios from '../../axios-client';
+import Axios from '../../pages/api/axios-client';
 
 async function getProducts(){
  

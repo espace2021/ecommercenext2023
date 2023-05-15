@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
 import axios from "axios";
 
 export default NextAuth({
@@ -9,27 +8,24 @@ export default NextAuth({
     },
     providers: [
         CredentialsProvider({
-            async authorize(credentials,req){
+            async authorize(credentials,req,res){
                       
                 const {email, password} = credentials;
                // console.log(email, password)
              
-                const res = await axios.post('http://127.0.0.1:3001/api/users/login',{
+                const response = await axios.post('http://127.0.0.1:3001/api/users/login',{
                   email, 
                   password
                     })
-             
-                  if(res){  
+                
+                  if(response){  
+              
                  const user = {
-                        "email": res.data.user.email,
-                        "name": res.data.user.firstname+ " "+res.data.user.lastname,
+                        "email": response.data.user.email,
+                        "name": response.data.user.firstname+ " "+response.data.user.lastname,
                         "password":password
                      };
-                    
-                        /*
-                        "accessToken": res.data.token,
-                        "refreshToken": res.data.refreshToken
-                        */
+                   
                     return user
                     }
                     else {
@@ -57,13 +53,15 @@ export default NextAuth({
                 password
                   })
             token.user = updatedUser.data;
-        }
+               }
 
           return Promise.resolve(token);
         },
         session: async ({ session, token }) => {
           session.user = token.user;
           console.log("Session ",session)
+        // delete password from session
+        delete session?.user?.password;
           return Promise.resolve(session);
         },
       },
@@ -73,8 +71,6 @@ export default NextAuth({
     secret : process.env.NEXTAUTH_SECRET
    
 });
-
-
 
 
 

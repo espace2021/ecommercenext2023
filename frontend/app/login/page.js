@@ -16,12 +16,13 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try{
-      const data= await signIn('credentials',{
+      const res= await signIn('credentials',{
         redirect: false,
         email,
         password
       })
-      console.log(data);
+      console.log(res);
+    
       router.push('/listprotected')
     } catch (error) {
       console.log(error);

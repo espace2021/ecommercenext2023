@@ -1,16 +1,19 @@
-
-import { getServerSession  } from 'next-auth/next'
-
 import axios from "axios";
+import { getServerSession } from "next-auth/react";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 const ApiClient = () => {
+
 const instance = axios.create({baseURL :'http://localhost:3001/api/'})
+
 instance.interceptors.request.use(async (request) => {
-    const session = await getServerSession()
- console.log("recupaxiosheader",session)
-    if (session) {
+
+const user = await getServerSession(authOptions);
+
+ console.log("recupaxiosheader *** 3 ",user)
+    if (user) {
         request.headers.common = {
-            Authorization: `Bearer ${session?.user.token}`
+            Authorization: `Bearer ${user.token}`
         }
     }
      return request
