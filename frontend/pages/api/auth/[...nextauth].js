@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 
-export default NextAuth({
+export const authOptions = {
     session: {
         strategy :'jwt'
     },
@@ -41,8 +41,12 @@ export default NextAuth({
         
     ],
     callbacks: {
-        jwt: async ({ token, user }) => {
+        jwt: async ({ token, user, trigger, session  }) => {
             console.log("user ",user)
+            if (trigger === "update") {
+              return { ...token, ...session.user };
+            }
+        else {      
         if (user) {
            
             const email = user.email;
@@ -56,7 +60,9 @@ export default NextAuth({
                }
 
           return Promise.resolve(token);
+        }
         },
+        
         session: async ({ session, token }) => {
           session.user = token.user;
           console.log("Session ",session)
@@ -70,7 +76,7 @@ export default NextAuth({
     },
     secret : process.env.NEXTAUTH_SECRET
    
-});
-
+}
+export default NextAuth(authOptions)
 
 

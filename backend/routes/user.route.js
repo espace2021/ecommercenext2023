@@ -131,7 +131,7 @@ router.post('/login', async (req, res) =>  {
   
   //Access Token 
   const generateAccessToken=(user) =>{
-      return jwt.sign ({ iduser: user._id, role: user.role }, process.env.SECRET, { expiresIn: '3600s'})
+      return jwt.sign ({ iduser: user._id, role: user.role }, process.env.SECRET, { expiresIn: '60s'})
     }
   
     // Refresh

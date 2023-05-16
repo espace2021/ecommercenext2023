@@ -14,12 +14,12 @@ router.get('/', verifyToken,async (req, res, )=> {
     }
 
 });
-// créer un nouvel article
-router.post('/', verifyToken,uploadFile.single("imageart"),async (req, res) =>  {
-    const {reference,designation,prix,marque,qtestock,scategorieID} = req.body
-    const imageart = req.file.filename
-    const nouvarticle = new Article({reference:reference,designation:designation,prix:prix,marque:marque,qtestock:qtestock,scategorieID:scategorieID,imageart:imageart})
 
+
+// créer un nouvel article
+router.post('/', async (req, res) =>  { 
+
+ const nouvarticle = new Article(req.body)
     try {
         await nouvarticle.save();
 
