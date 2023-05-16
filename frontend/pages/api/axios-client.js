@@ -1,6 +1,6 @@
 'use client'
 import axios from "axios";
-import { getServerSession} from "next-auth/next";
+import { getSession} from "next-auth/react";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 
@@ -10,7 +10,7 @@ axios.defaults.baseURL = 'http://localhost:3001/api';
 axios.interceptors.request.use(
 
    async(config) => {
-    const user = await getServerSession(authOptions);
+    const user = await getSession(authOptions);
 
     console.log("recupaxiosheader *** 3 ",user)
     const token=user.user.token
@@ -42,7 +42,7 @@ axios.interceptors.request.use(
   
   async function (error) {
   
-    const user = await getServerSession(authOptions);
+    const user = await getSession(authOptions);
 
     console.log("recupaxiosheader *** 4 ",user.user.refreshToken)
     const refreshToken=user.user.refreshToken
@@ -63,22 +63,15 @@ axios.interceptors.request.use(
             if (res.status === 200) {
 
                 // 1) put tokens 
-               // localStorage.setItem('CC_Token', res.data.token);
-
-               // localStorage.setItem('refresh_token', res.data.refreshToken);
-               //updateSession(res.data.token,res.data.refreshToken)
-               const { data: session, update } = useSession();
-               await update({
-                 ...session,
-                 user: {
-                   ...session?.user,
-                   token: res.data.token,
-                   refreshToken: res.data.refreshToken,
-                 },
-               });
+              
+                updateSession(res.data.token,res.data.refreshToken)
+            
                 // 2) Change Authorization header
-               // axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('CC_Token');
+                const user = await getSession(authOptions);
 
+                console.log("recupaxiosheader *** 5 ",user.user.token)
+                const token=user.user.token
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
                 // 3) return originalRequest object with Axios.
                 return axios(originalRequest);
@@ -94,16 +87,16 @@ axios.interceptors.request.use(
   );
   
   export default axios;
-/*
+
   async function updateSession  (token,refreshToken) {
         const { data: session, update } = useSession();
         await update({
           ...session,
           user: {
             ...session?.user,
-            token: token,
-            refreshToken: refreshToken,
           },
+          token: token,
+          refreshToken: refreshToken,
         });
+        
       }
- */

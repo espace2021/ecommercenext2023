@@ -1,25 +1,24 @@
 "use client"
-import React from 'react'
+import React,{useState} from 'react'
 import Axios from '../../pages/api/axios-client';
-
-async function getProducts(){
+import ProductList from '../../components/products/productList'
+function getProducts(){
  
- const res = await Axios.get('/articles')
+ const res = Axios.get('/articles')
   .then((res)=>{return res.data})
   .catch((err)=>{console.log(err) ; return null })
  return res;  
 }
 
-const Listproduct =  async() => {
-  const products =  await getProducts();
+const Listproduct =  () => {
+
+  const [products,setProducts]=useState()
+
+   getProducts().then((response) => {setProducts(response) })
+  
 
   return (
-    <div>
-     { products?.map((product,index) =>{
-       return <div key={index}>{product.designation}</div>
-          })
-        }
-    </div>
+   <ProductList products={products} />
   )
 }
 
