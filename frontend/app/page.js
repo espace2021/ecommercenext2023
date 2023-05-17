@@ -1,10 +1,21 @@
 import React from "react";
 import SectionFirstLook from "@/components/home/section-first-look/pageSectionFirst";
 
+//import SectionFirstLookFooter from '../components/homePages/SectionFirstLook';
 
-export default function Home() {
-
+async function getCategories(){
  
+  const res= await fetch('http://localhost:3001/api/categories', { cache: 'no-store' })
+  const categories = await res.json();
+  return categories;
+}
+
+
+
+export default async function Home() {
+
+  const categories = await getCategories();
+
 return (
   
   <div className="interface-home">
@@ -45,7 +56,16 @@ Maintenant, vous pouvez commander et régler en toute sérénité, grâce à not
     descriptionPrimary={`NOTRE PRIORITÉ EST DE VOUS PROPOSER DES PRODUITS D’EXCEPTION`}
         />
   </div>
- 
+  <div>
+    {/*     {categories.map((categorie,index) => (
+          <SectionFirstLookFooter
+            key={index}
+            categorie={categorie}
+           />
+        ))}
+      
+   */}
+   </div>
 </div>
 
   )

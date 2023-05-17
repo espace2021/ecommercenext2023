@@ -1,12 +1,34 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
+import axios from 'axios'
+import { useRouter } from "next/navigation";
 
 const Listproducts = ({produits}) => {
+
+  const router = useRouter();
+
+  //suppression
+
+  const handleDelete=async(_id)=>{
+    if(window.confirm("supprimer le produit O/N")) {
+             console.log(_id)
+             await ( axios.delete('http://localhost:3001/api/articles/' + _id))
+             .then((res)=>{ console.log(res)
+              router.refresh()
+             })
+             .catch(error=>{
+                 console.log(error)
+                })
+ }
+}
+
+
   return (
     
        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <h1 className="text-3xl my-5 ml-4 font-bold">
-        {produits?.productsCount} Products
+        {produits?.length} Products
       </h1>
       <table className="w-full text-sm text-left">
         <thead className="text-l text-gray-700 uppercase">
@@ -32,8 +54,8 @@ const Listproducts = ({produits}) => {
           </tr>
         </thead>
         <tbody>
-          {produits?.map((product) => (
-            <tr className="bg-white">
+          {produits?.map((product, index) => (
+            <tr className="bg-white" key={index}>
                 <td className="px-6 py-2">
                 <Image
               src={
@@ -47,7 +69,15 @@ const Listproducts = ({produits}) => {
             />
 
                 </td>
-              <td className="px-6 py-2">{product?.designation.substring(0,20)}...</td>
+              <td className="px-6 py-2">
+              <Link
+                    href={`/admin/products/detail/${product?._id}`}
+                    className="px-2 py-2 inline-block text-green-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer mr-2"
+                  >  
+                {product?.designation.substring(0,20)}
+                ...
+              </Link>  
+              </td>
               <td className="px-6 py-2">{product?.marque}</td>
               <td className="px-6 py-2">{product?.qtestock}</td>
               
@@ -55,18 +85,17 @@ const Listproducts = ({produits}) => {
               <td className="px-6 py-2">
                 <div>
                   <Link
-                    href={`/admin/products`}
+                    href={`/admin/products/update/${product?._id}`}
                     className="px-2 py-2 inline-block text-green-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer mr-2"
                   >
                     <i className="fa fa-image" aria-hidden="true">Update</i>
                   </Link>
 
-                  <Link
-                    href={`/admin/products`}
-                    className="px-2 py-2 inline-block text-yellow-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer mr-2"
+                  <span  onClick={()=>handleDelete(product._id)} 
+                  className="px-2 py-2 inline-block text-yellow-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer mr-2"
                   >
                     <i className="fa fa-pencil" aria-hidden="true">Delete</i>
-                  </Link>
+                  </span>
                   
                 </div>
               </td>

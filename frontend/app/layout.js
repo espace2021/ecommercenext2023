@@ -13,9 +13,8 @@ export const metadata = {
 
 export default function RootLayout({ children,session}) {
   return (
-    
     <html lang="en">
-      <head />
+       <head />
       <body className={inter.className}>
       <SessionProvider session={session}>
        <Navbar /> 

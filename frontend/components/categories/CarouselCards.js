@@ -23,7 +23,7 @@ const responsive = {
 };
 
 const CarouselCards = ({ cat}) => { 
-console.log(cat)
+
   return (
 <>
 {cat &&  <Carousel

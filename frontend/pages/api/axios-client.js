@@ -12,7 +12,7 @@ axios.interceptors.request.use(
    async(config) => {
     const user = await getSession(authOptions);
 
-    console.log("recupaxiosheader *** 3 ",user)
+    //console.log("recupaxiosheader *** 3 ",user)
     const token=user.user.token
       
         if (token) {
@@ -44,7 +44,7 @@ axios.interceptors.request.use(
   
     const user = await getSession(authOptions);
 
-    console.log("recupaxiosheader *** 4 ",user.user.refreshToken)
+   // console.log("recupaxiosheader *** 4 ",user.user.refreshToken)
     const refreshToken=user.user.refreshToken
 
     const originalRequest = error.config;
@@ -88,15 +88,28 @@ axios.interceptors.request.use(
   
   export default axios;
 
-  async function updateSession  (token,refreshToken) {
+  /*async function updateSession  (token,refreshToken) {
         const { data: session, update } = useSession();
         await update({
-          ...session,
+          //...session,
           user: {
             ...session?.user,
           },
           token: token,
           refreshToken: refreshToken,
         });
+        
+      }*/
+
+      async function updateSession  (token,refreshToken) {
+        const { data: session, update } = useSession()
+       
+        const updatedSession = {
+          ...session,
+          token: token,
+          refreshToken: refreshToken,
+      };
+
+      await update(updatedSession);
         
       }

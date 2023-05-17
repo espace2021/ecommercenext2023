@@ -1,22 +1,17 @@
-"use client";
-import React, { useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+'use client'
 
-const NewProduct =  ({scategories}) => {
+import React, { useState,useEffect } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+
+function UpdateProduct ({prod,scategories})  {
 
   const router = useRouter();
-  const [product, setProduct] = useState({
-    reference: "",
-    imageart:"",
-    designation: "",
-    prix: "",
-    qtestock: "",
-    marque: "",
-    scategorieID: "",
-  });
+  const [product, setProduct] = useState({});
 
-  
+  useEffect(() => {
+    setProduct(prod)
+  },[]);
 
   const onChange = (e) => { 
      setProduct({ ...product, [e.target.name]: e.target.value });
@@ -27,6 +22,7 @@ const NewProduct =  ({scategories}) => {
   const submitHandler = async(e) => {
     e.preventDefault();
     const produit={
+      _id:product._id,
       reference: product.reference,
     imageart:product.imageart,
     designation: product.designation,
@@ -36,14 +32,10 @@ const NewProduct =  ({scategories}) => {
     scategorieID: product.scategorieID
     }
     
-  /*  await ( fetch('http://localhost:3001/api/articles', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(produit),*/
-  await(axios.post("http://localhost:3001/api/articles/",produit)
+  await(axios.put('http://localhost:3001/api/articles/' + product._id,produit)
  )
   .then(res=>{
-    console.log("Insert OK",res);
+    console.log("update OK",res);
     router.push('/admin/products')
     router.refresh()
   })
@@ -53,11 +45,11 @@ const NewProduct =  ({scategories}) => {
     })
  
     }
-    
-return (
+
+  return (
     <section className="container max-w-3xl p-6 mx-auto">
       <h1 className="mb-3 text-xl md:text-3xl font-semibold text-black mb-8">
-        Nouveau Produit
+        Update Produit
       </h1>
 
       <form onSubmit={submitHandler}>
@@ -201,11 +193,11 @@ return (
           type="submit"
           className="my-2 px-4 py-2 text-center inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 w-full"
         >
-          Create Product
+          Update Product
         </button>
       </form>
     </section>
-  );
-};
+  )
+}
 
-export default NewProduct;
+export default UpdateProduct

@@ -42,8 +42,8 @@ export const authOptions = {
     ],
     callbacks: {
         jwt: async ({ token, user, trigger, session  }) => {
-            console.log("user ",user)
-            if (trigger === "update") {
+         //   console.log("user ",user)
+            if (trigger === "update") { console.log("session updated",session)
               return { ...token, ...session.user };
             }
         else {      
@@ -65,7 +65,7 @@ export const authOptions = {
         
         session: async ({ session, token }) => {
           session.user = token.user;
-          console.log("Session ",session)
+        //  console.log("Session ",session)
         // delete password from session
         delete session?.user?.password;
           return Promise.resolve(session);

@@ -4,7 +4,7 @@ const Article=require("../models/article")
 const {verifyToken} =require("../middleware/verif-token")
 const { uploadFile } = require('../middleware/upload-file')
 // afficher la liste des articles.
-router.get('/', verifyToken,async (req, res, )=> {
+router.get('/', async (req, res, )=> {
     try {
         const articles = await Article.find().populate("scategorieID").exec();
                 
@@ -58,9 +58,12 @@ router.put('/:articleId', async (req, res)=> {
 // Supprimer un article
 router.delete('/:articleId', async (req, res)=> {
     const  id  = req.params.articleId;
+    try {
     await Article.findByIdAndDelete(id);
 
-    res.json({ message: "article deleted successfully." });
-
+    res.status(200).json({ message: "article deleted successfully." });
+   } catch (error) {
+    res.status(404).json({ message: error.message });
+    }   
 });
 module.exports = router;
