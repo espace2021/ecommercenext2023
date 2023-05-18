@@ -5,7 +5,7 @@ import React from 'react'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-const DetailCateg = ({scategories}) => {
+const DetailCateg = ({scategories}) => {  console.log(scategories)
   return (
     <center>
       <Carousel width="30%">

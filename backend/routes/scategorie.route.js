@@ -2,6 +2,17 @@ const express = require('express');
 const router = express.Router();
 const SCategorie=require("../models/scategorie")
 
+// chercher une sous catégorie par cat
+router.get('/cat/:categorieID',async(req, res)=>{
+    try {
+        const scat = await SCategorie.find({ categorieID: req.params.categorieID}).exec();
+        
+        res.status(200).json(scat);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+});
+
 // afficher la liste des categories.
 router.get('/', async (req, res, )=> {
     try {

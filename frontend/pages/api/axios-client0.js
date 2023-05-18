@@ -3,9 +3,9 @@ import axios from "axios";
 import { getSession} from "next-auth/react";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
-//import {updateSession} from "./axios-auth"
+import {updateSession} from "./axios-auth"
 
-//const updateSes=updateSession();
+const updateSes=updateSession();
 
 axios.defaults.baseURL = 'http://localhost:3001/api';
 
@@ -67,7 +67,7 @@ axios.interceptors.request.use(
 
                 // 1) put tokens 
               
-              //  updateSes(res.data.token,res.data.refreshToken)
+                updateSes(res.data.token,res.data.refreshToken)
             
                 // 2) Change Authorization header
                 const user = await getSession(authOptions);

@@ -1,7 +1,7 @@
 import React from "react";
 import SectionFirstLook from "@/components/home/section-first-look/pageSectionFirst";
 
-//import SectionFirstLookFooter from '../components/homePages/SectionFirstLook';
+import SectionFirstLookFooter from '../components/homePages/SectionFirstLook';
 
 async function getCategories(){
  
@@ -57,14 +57,14 @@ Maintenant, vous pouvez commander et régler en toute sérénité, grâce à not
         />
   </div>
   <div>
-    {/*     {categories.map((categorie,index) => (
+        {categories.map((categorie,index) => (
           <SectionFirstLookFooter
             key={index}
             categorie={categorie}
            />
         ))}
       
-   */}
+   
    </div>
 </div>
 

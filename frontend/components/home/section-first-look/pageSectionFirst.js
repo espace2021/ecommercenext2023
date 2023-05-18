@@ -21,7 +21,7 @@ const SectionFirstLook = ({
         <div className="description-primary">
             <h1>{descriptionPrimary}</h1>
         </div>
-        <div className="description-secondary">     
+    <div className="description-secondary">     
     <div> {!isShown ? "Découvrir" : null }     </div>  
      <div  onClick={()=>handleClick()} >
      
@@ -30,8 +30,8 @@ const SectionFirstLook = ({
          src="https://i.ibb.co/kgSTKJn/arrow-down.png"
          style={{
            transform: isShown ? `rotate(180deg)` : `rotate(0deg)`,
-           transitionDuration: `150ms`,
-         }}
+           transitionDuration: `150ms`
+            }}
        />
       
      </div>

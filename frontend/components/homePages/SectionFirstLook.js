@@ -15,6 +15,7 @@ function SectionFirstLook({categorie}) {
                 alt={categorie.nomcategorie}
                 fill
                 style={{objectFit:"cover"}}
+                
               />
           
           </div>
