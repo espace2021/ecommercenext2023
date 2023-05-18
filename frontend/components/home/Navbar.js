@@ -52,7 +52,7 @@ function Navbar () {
             </Typography>
          
             {data ? ( <>
-              <span style={{ marginRight: "15px",color :"orange" }}>USER : {data.user.user.firstname}</span>
+              <span style={{ marginRight: "15px",color :"orange" }}>USER : {data.user.user.email}</span>
               {" "}
              <Button color="inherit" onClick={() => {signOut();}}><ExitToAppRoundedIcon style={{ color: 'gray' }}/> Logout </Button>
             </>

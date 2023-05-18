@@ -1,82 +1,58 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions, User } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
-import axios from "axios";
-
 export const authOptions = {
-    session: {
-        strategy :'jwt'
-    },
-    providers: [
-        CredentialsProvider({
-            async authorize(credentials,req,res){
-                      
-                const {email, password} = credentials;
-               // console.log(email, password)
-             
-                const response = await axios.post('http://127.0.0.1:3001/api/users/login',{
-                  email, 
-                  password
-                    })
-                
-                  if(response){  
-              
-                 const user = {
-                        "email": response.data.user.email,
-                        "name": response.data.user.firstname+ " "+response.data.user.lastname,
-                        "password":password
-                     };
-                   
-                    return user
-                    }
-                    else {
-                        console.log("ERROR ");
-                        return null;
-                    }
-
-                    
-                }
-
-                
-            })
-        
-    ],
-    callbacks: {
-        jwt: async ({ token, user, trigger, session  }) => {
-       //  console.log("user ",user)
-            if (trigger === "update") { console.log("session updated",session)
-              return { ...token, ...session.user };
-            }
-        else {      
-        if (user) {
-           
-            const email = user.email;
-                const password = user.password
-        
-            const updatedUser =  await axios.post('http://127.0.0.1:3001/api/users/login',{
-                email, 
-                password
-                  })
-            token.user = updatedUser.data;
-               }
-
-          return Promise.resolve(token);
-        }
-        },
-        
-        session: async ({ session, token }) => {
-          session.user = token.user;
-        //  console.log("Session ",session)
-        // delete password from session
-        delete session?.user?.password;
-          return Promise.resolve(session);
-        },
+  // Configure one or more authentication providers
+  providers: [
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. "Sign in with...")
+      name: "Credentials",
+      // `credentials` is used to generate a form on the sign in page.
+      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
+      // e.g. domain, email, password, 2FA token, etc.
+      // You can pass any HTML attribute to the <input> tag through the object.
+      credentials: {
+        email: { label: "email", type: "text", placeholder: "saha@yahoo.fr" },
+        password: { label: "Password", type: "password" },
       },
-    pages : {
-        signIn: '/login'
+      async authorize(credentials, req) {
+        // Add logic here to look up the user from the credentials supplied
+
+        const res = await fetch("http://localhost:3001/api/users/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: credentials?.email,
+            password: credentials?.password,
+          }),
+        });
+        const user = await res.json();
+
+        if (user) {
+          // Any object returned will be saved in `user` property of the JWT
+          return user;
+        } else {
+          // If you return null then an error will be displayed advising the user to check their details.
+          return null;
+
+          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+        }
+      },
+    }),
+  ],
+  callbacks: {
+    async jwt({ token, user, account }) {
+      console.log({ account });
+
+      return { ...token, ...user };
     },
-    secret : process.env.NEXTAUTH_SECRET
-   
-}
-export default NextAuth(authOptions)
+    async session({ session, token, user }) {
+      session.user = token ;
 
-
+      return session;
+    },
+  },
+};
+export default NextAuth(authOptions);
