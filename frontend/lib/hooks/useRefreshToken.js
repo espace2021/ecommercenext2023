@@ -12,6 +12,7 @@ export const useRefreshToken = () => {
     if (session) {
       session.user.token = res.data.token;
       session.user.refreshToken = res.data.refreshToken
+      console.log("refreshed")
     }
     else signIn();
   };

@@ -37,7 +37,6 @@ export async function AuthGetApi(url) {
       },
     });
     return await res.json();
-    
   }
 
   return await res.json();

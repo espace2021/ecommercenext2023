@@ -1,5 +1,4 @@
-import NextAuth, { AuthOptions, User } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 export const authOptions = {
   // Configure one or more authentication providers
@@ -12,7 +11,7 @@ export const authOptions = {
       // e.g. domain, email, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        email: { label: "email", type: "text", placeholder: "saha@yahoo.fr" },
+        email: { label: "email", type: "text"},
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
