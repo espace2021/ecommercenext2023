@@ -26,17 +26,18 @@ export async function AuthGetApi(url) {
     },
   });
 
-  if (res.status == 401) {
+  if (res.status == 403) {
     if (session) session.user.token = await refreshToken(session?.user.refreshToken ?? "");
     console.log("after: ", session?.user.token);
 
     res = await fetch(BASE_URL + url, {
       method: "GET",
       headers: {
-        Authorization: `bearer ${session?.user.token}`,
+        Authorization: `Bearer ${session?.user.token}`,
       },
     });
     return await res.json();
+    
   }
 
   return await res.json();
