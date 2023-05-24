@@ -1,22 +1,49 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+async function refreshAccessToken(token) {
+
+  console.log("Obtain",token.refreshToken)
+  try {
+    const response =  await fetch('http://localhost:3001/api/users/refreshToken', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({refreshToken:token.refreshToken})
+  });
+    
+
+    const refreshedTokens = await response.json()
+
+    if (!response.ok) {
+      throw refreshedTokens
+    }
+    console.log("refreshedTokens.token",refreshedTokens.token)
+    token.token = refreshedTokens.token;
+    token.refreshToken = refreshedTokens.refreshToken
+    token.expiresIn=refreshedTokens.expiresIn
+    console.log("TOKEN",token)
+    return {
+      ...token
+         }
+  } catch (error) {
+    console.log(error)
+
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    }
+  }
+}
+
 export const authOptions = {
-  // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
-      name: "Credentials",
-      // `credentials` is used to generate a form on the sign in page.
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, email, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
-      credentials: {
+       name: "Credentials",
+       credentials: {
         email: { label: "email", type: "text"},
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-
         const res = await fetch("http://localhost:3001/api/users/login", {
           method: "POST",
           headers: {
@@ -30,28 +57,39 @@ export const authOptions = {
         const user = await res.json();
 
         if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
+           return user;
+           
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+           return null;
         }
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user, account }) {
-      console.log({ account });
-
+     // console.log({ account });
+   
+     if (account && user) {
       return { ...token, ...user };
+    }
+  console.log("il reste",Date.now() - token.expiresIn)
+    // Return previous token if the access token has not expired yet
+    if (Date.now() < token.expiresIn) {
+      return { ...token,  ...user };
+    }
+
+    // Access token has expired, try to update it
+    return refreshAccessToken(token)
+
     },
     async session({ session, token, user }) {
       session.user = token ;
-
+      session.error = token.error
+      
+console.log("SESSION",session)
       return session;
     },
   },
 };
 export default NextAuth(authOptions);
+

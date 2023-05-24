@@ -18,7 +18,9 @@ export default function RootLayout({ children,session}) {
       <body className={inter.className}>
       <SessionProvider session={session}>
        <Navbar /> 
+       
         {children}
+     
       </SessionProvider>
       </body>
     </html>

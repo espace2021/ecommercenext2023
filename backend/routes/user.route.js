@@ -40,53 +40,9 @@ router.get('/', async (req, res)=> {
 });
 
 
-/*
 // se connecter
 router.post('/login', async (req, res) =>  {
-    try {
-        let { email, password } = req.body
-
-        if (!email || !password) {
-            return res.status(404).send({ success: false, message: "All fields are required" })
-        }
-
-        let user = await User.findOne({ email }).select('+password').select('+isActive')
-        
-
-        if (!user) {
-
-            return res.status(404).send({ success: false, message: "Account doesn't exists" })
-
-        } else {
-
-            let isCorrectPassword = await bcrypt.compare(password, user.password)
-            if (isCorrectPassword) {
-
-                delete user._doc.password
-                if (!user.isActive) return res.status(200).send({ success: false, message: 'Your account is inactive, Please contact your administrator' })
-
-                const token = jwt.sign({ iduser: user._id, role: user.role }, process.env.SECRET, { expiresIn: "1h", })
-
-                return res.status(200).send({ success: true, user, token })
-
-            } else {
-
-                return res.status(404).send({ success: false, message: "Please verify your credentials" })
-
-            }
-
-        }
-
-    } catch (err) {
-        return res.status(404).send({ success: false, message: err.message })
-    }
-
-   });
-
-*/
-
-// se connecter
-router.post('/login', async (req, res) =>  {
+      let expires = Date.now() + 1
     try {
         let { email, password } = req.body
   
@@ -113,7 +69,7 @@ router.post('/login', async (req, res) =>  {
    
                const refreshToken = generateRefreshToken(user);
   
-                return res.status(200).send({ success: true, user,token,refreshToken })
+                return res.status(200).send({ success: true, user,token,refreshToken,expiresIn: expires})
   
             } else {
   
@@ -141,8 +97,10 @@ router.post('/login', async (req, res) =>  {
     
     //Refresh Route
     
-    router.post('/refreshToken', async (req, res, )=> { console.log(req.body.refreshToken)  
+    router.post('/refreshToken', async (req, res, )=> {  
+        let expires = Date.now() + 3600 
     const refreshtoken = req.body.refreshToken; 
+   
       if (!refreshtoken) {
        return res.status(404).send({success: false, message: 'Token Not Found' });
           }
@@ -155,10 +113,11 @@ router.post('/login', async (req, res) =>  {
              const token = generateAccessToken(user);
    
              const refreshToken = generateRefreshToken(user);
-             console.log("token-------",token);  
+             console.log("RFR-------",token);  
             res.status(200).send({success: true,
              token,
-             refreshToken
+             refreshToken,
+             expiresIn: expires
            })
               }
           });

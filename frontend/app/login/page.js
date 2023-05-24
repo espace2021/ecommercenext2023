@@ -23,7 +23,7 @@ const Login = () => {
       })
       console.log(res);
     
-      router.push('/listprotected')
+      router.push('/listprotected4')
     } catch (error) {
       console.log(error);
     }
