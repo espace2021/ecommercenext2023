@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
 
 async function refreshTokenRequest(token) {
 
@@ -34,14 +33,8 @@ async function refreshTokenRequest(token) {
   }
 }
 
-
 export const authOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
-    GoogleProvider({
-      clientId: "416025593522-i6t77npigt6mvm1hpeovpge7knfm0q94.apps.googleusercontent.com",
-      clientSecret: "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"
-  }),
     CredentialsProvider({
        name: "Credentials",
        credentials: {
@@ -97,3 +90,4 @@ export const authOptions = {
 
 };
 export default NextAuth(authOptions);
+

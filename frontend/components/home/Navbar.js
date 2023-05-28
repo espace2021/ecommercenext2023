@@ -10,11 +10,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-import FaceIcon from '@mui/icons-material/Face';
+import Google from '@mui/icons-material/Google';
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
+import FaceIcon from '@mui/icons-material/Face';
 
-
-import {useSession, signOut} from 'next-auth/react';
+import {useSession, signOut,signIn} from 'next-auth/react';
 
 
 
@@ -23,6 +23,8 @@ function Navbar () {
 
 
   const {data} =useSession();
+
+  console.log(data)
 
     const router = useRouter();
     
@@ -52,14 +54,17 @@ function Navbar () {
             </Typography>
          
             {data ? ( <>
-              <span style={{ marginRight: "15px",color :"orange" }}>USER : {data?.user?.user?.email}</span>
-              {" "}
-             <Button color="inherit" onClick={() => {signOut();}}><ExitToAppRoundedIcon style={{ color: 'gray' }}/> Logout </Button>
+             
+             <Button color="inherit" onClick={() => {signOut();}}><ExitToAppRoundedIcon style={{ color: 'gray' }}/> Logout</Button>
             </>
-            ): <Button color="inherit" onClick={() => router.push('/login')}><FaceIcon style={{ color: 'green' }}/> Login </Button>
-            }
+            ): (<>
+            <Button color="inherit" onClick={() => signIn()}><Google style={{ color: 'green' }}/> Login with Google </Button>
+            <Button color="inherit" onClick={() => router.push('/login')}><FaceIcon style={{ color: 'green' }}/> Login </Button>
+            </> 
+            ) 
+          }
 
-           
+                   
           </Toolbar>
         </AppBar>
       </Box>

@@ -16,7 +16,7 @@ router.get('/scat/:scategorieID',async(req, res)=>{
 });
 
 // afficher la liste des articles.
-router.get('/', verifyToken,async (req, res, )=> {
+router.get('/', async (req, res, )=> {
     try {
         const articles = await Article.find().populate("scategorieID").exec();
                 
