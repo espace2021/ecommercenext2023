@@ -16,8 +16,8 @@ const ARTICLE_API=process.env.API_URL+"/api/articles"
         return await Axios.post(ARTICLE_API, article);
     
         }    
-     export const editArticle=(_id,article) =>{ 
-        return Axios.put(ARTICLE_API + '/' + _id, article);
+     export const editArticle=(article) =>{ 
+        return Axios.put(ARTICLE_API + '/' + article._id, article);
     
         }
         

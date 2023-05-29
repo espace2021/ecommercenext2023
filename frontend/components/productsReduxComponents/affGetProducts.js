@@ -9,6 +9,8 @@ import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 import Insertarticle from './insertArticle';
 
+import Editarticle from "./updateArticle";
+
 const AffGetProducts=()=>{
 
   const dispatch = useDispatch();
@@ -71,7 +73,9 @@ const AffGetProducts=()=>{
           options: {
           customBodyRender: (value,tableMeta) => (
             <div>
-    
+         <span>
+          <Editarticle articles={articles[tableMeta.rowIndex]} />
+          </span>
           <span
            onClick={(e) => handleDelete(value)}
            style={{ cursor: 'pointer'}}

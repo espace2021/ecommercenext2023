@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import {useDispatch,useSelector} from "react-redux";
-import {createArticle} from "@/slices/productSlice"
+import {updateArticle} from "@/slices/productSlice"
 import {getScategories} from "@/slices/scategorieSlice"
 
 import { FilePond,registerPlugin } from 'react-filepond'
@@ -18,9 +18,12 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 import {UploadFirebase} from '../../utils/UploadFirebase';
 
+import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 
-const UpdateArticle = () => {
+const UpdateArticle = (props) => {
   
+ const [_id,setId]=useState();
+
   const [file, setFile] = useState("");
 
 const [show, setShow] = useState(false);
@@ -33,27 +36,41 @@ const [prix, setPrix] = useState("");
 const [marque, setMarque] = useState("");
 const [qtestock, setQtestock] = useState("");
 const [scategorieID, setScategorieID] = useState("");
+const [imageart, setImageart] = useState();
 const dispatch = useDispatch();
 const {scategories,isLoading} = useSelector((state) =>state.storescategories);
+
+useEffect(() => {
+    setId(props.articles._id);
+    setReference(props.articles.reference);
+    setDesignation(props.articles.designation);
+    setPrix(props.articles.prix);
+    setMarque(props.articles.marque);
+    setQtestock(props.articles.qtestock);
+    setScategorieID(props.articles.scategorieID);
+    setImageart(props.articles.imageart);
+         }, []);
+  
 
 useEffect(() => {
 dispatch(getScategories());
 },[dispatch]);
 
 const handleSubmit = (url) => {
-
+    setImageart(url)
   const article={
+  _id:_id,  
   reference: reference,
   designation: designation,
   prix: prix,
   marque: marque,
   qtestock: qtestock,
-  imageart: url,
+  imageart: url?url:imageart,
   scategorieID: scategorieID
   }
-  dispatch(createArticle(article))
+  dispatch(updateArticle(article))
   .then(res=>{
-  console.log("Insert OK",res);
+  console.log("Update OK",res);
   setReference("");
   setDesignation("");
   setPrix("");
@@ -66,7 +83,7 @@ const handleSubmit = (url) => {
   })
   .catch(error=>{
   console.log(error)
-  alert("Erreur ! Insertion non effectuée")
+  alert("Erreur ! Modification non effectuée")
   })
  
   };
@@ -75,16 +92,14 @@ const handleSubmit = (url) => {
     event.preventDefault();
     const form = event.currentTarget;
    if (form.checkValidity() === true) {
-          if (!file[0].file) {
-              alert("Please upload an image first!");
-          }
-          else {
+          if (file) {
             console.log(file[0].file)
             resultHandleUpload(file[0].file,event);
-        }
-        if (!file[0].file) {
-          alert("Please upload an image first!");
-      }
+          }
+         else{
+            const url = ""
+            handleSubmit(url)
+         }
       }
    setValidated(true);
 };
@@ -106,14 +121,14 @@ const resultHandleUpload = async(file) => {
 
 return (
   <>
-  <Button variant="success"style={{'margin':10,'left':10}}
+  <span 
   onClick={handleShow}>
-  Nouveau
-  </Button>
+  <NoteAltOutlinedIcon />
+  </span>
   <Modal show={show} onHide={handleClose}>
   <Form noValidate validated={validated}>
   <Modal.Header closeButton>
-  <Modal.Title> <h1 align="center">Ajout Article</h1></Modal.Title>
+  <Modal.Title> <h1 align="center">Modification Article</h1></Modal.Title>
   </Modal.Header>
   <Modal.Body>
   <div className="container w-100 d-flex justify-content-center">
@@ -192,13 +207,16 @@ Qté stock Incorrect
 </Form.Group>
 <Form.Group as={Col} md="6">
 <Form.Label>Image</Form.Label>
-<FilePond
-              files={file}
-              allowMultiple={false}
-              onupdatefiles={setFile}
-              labelIdle='<span class="filepond--label-action">Browse One</span>'
-            
-            />
+{!file?<img src={imageart} style={{width:100, height:50}}/> :null} 
+               
+                 <div style={{width:200, height:150}}>
+              <FilePond
+                     files={file}
+                     allowMultiple={false}
+                     onupdatefiles={setFile}
+                     labelIdle='<span class="filepond--label-action">Browse One</span>'
+                    />
+                 </div>
 
 </Form.Group>
 <Form.Group as={Col} md="12">
@@ -209,7 +227,6 @@ type="select"
 value={scategorieID}
 onChange={(e)=>setScategorieID(e.target.value)}
 >
-<option></option>
 {!isLoading? scategories.map((scat)=><option key={scat._id}
 value={scat._id}>{scat.nomscategorie}</option>):null}
 </Form.Control>
