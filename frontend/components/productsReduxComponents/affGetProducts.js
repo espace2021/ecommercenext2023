@@ -96,11 +96,7 @@ const renderArticles = () => {
          title="Liste articles"
          data={articles}
          columns={columns}
-         options={{
-                 
-          rowsPerPageOptions:[5,10,15,100]
-        }}
-       />
+        />
     }
 </React.Fragment> 
 }

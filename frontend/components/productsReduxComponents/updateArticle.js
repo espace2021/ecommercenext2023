@@ -19,7 +19,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 import {UploadFirebase} from '../../utils/UploadFirebase';
 
 
-const Insertarticle = () => {
+const UpdateArticle = () => {
   
   const [file, setFile] = useState("");
 
@@ -230,4 +230,4 @@ Fermer
 </>
 )
 }
-export default Insertarticle
+export default UpdateArticle
