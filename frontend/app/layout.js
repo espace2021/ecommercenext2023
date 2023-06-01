@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import './globals.css'
 import { Inter } from 'next/font/google'
@@ -16,11 +16,12 @@ export const metadata = {
 }
 
 export default function RootLayout({ children,session}) {
+
   return (
     <html lang="en">
        <head />
       <body className={inter.className}>
-      <Providers>
+       <Providers>
       <SessionProvider session={session}>
        <Navbar /> 
        

@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -17,7 +17,22 @@ export default function ListRedux() {
 
   return (
     <div>
-     <AffGetProducts /> 
+   <AffGetProducts /> 
+    </div>
+  );
+}
+*/
+
+import { store } from "@/store/store";
+
+import AffGetProducts from "@/components/productsReduxComponents/affGetProducts";
+
+export default async function ListRedux() {
+
+  console.log(store.getState().storearticles.articles)
+  return (
+    <div>
+      <AffGetProducts getState={store.getState()} />
     </div>
   );
 }

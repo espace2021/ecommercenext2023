@@ -1,9 +1,10 @@
-import React from 'react';
+'use client'
+import React,{useEffect} from 'react';
 import MUIDataTable from "mui-datatables";
 
 import ReactLoading from 'react-loading';
 import {useDispatch,useSelector} from "react-redux"
-import {deleteArticle} from "@/slices/productSlice"
+import {deleteArticle,getArticles} from "@/slices/productSlice"
 
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
@@ -14,7 +15,12 @@ import Editarticle from "./updateArticle";
 const AffGetProducts=()=>{
 
   const dispatch = useDispatch();
+ 
   const {articles,isLoading,error} = useSelector((state) =>state.storearticles);
+
+  useEffect(() => {
+    dispatch(getArticles())
+  }, [dispatch]);
    
    const handleDelete=(id)=>{
     if(window.confirm("supprimer Article O/N"))  {
@@ -106,13 +112,14 @@ const renderArticles = () => {
 }
     return(
     <>
-      <div >
+     <div >
         <Insertarticle />
         </div> 
         <div >
    
             {renderArticles()}
-        </div>
+       </div>
+   
     </>
     )
 }

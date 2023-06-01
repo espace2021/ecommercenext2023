@@ -20,11 +20,8 @@ import {useSession, signOut,signIn} from 'next-auth/react';
 
 function Navbar () {
 
-
-
   const {data} =useSession();
 
-  console.log(data)
 
     const router = useRouter();
     
