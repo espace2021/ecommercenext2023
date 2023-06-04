@@ -2,6 +2,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import productReducer from '../slices/productSlice';
 import scategorieReducer from '../slices/scategorieSlice';
 import { categorieApi } from "@/servicesRTK/CategorieApi";
+import { createWrapper } from "next-redux-wrapper";
 export function makestore(){
     return configureStore({
         reducer: {
@@ -15,3 +16,4 @@ export function makestore(){
 }
 
 export const store = makestore();
+export const wrapper = createWrapper(makestore, { debug: true });

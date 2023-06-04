@@ -72,3 +72,4 @@ const CategoriesRTKcomponent = () => {
 }
 
 export default CategoriesRTKcomponent
+
